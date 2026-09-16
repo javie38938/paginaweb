@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Inteligencia Artificial · CBTIS 260</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --navy:#0d2c54;
+        --navy-ink:#16233a;
+        --paper:#f7f5ef;
+        --sheet:#ffffff;
+        --orange:#ff8c00;
+        --grid-line:#dbe1ea;
+        --rule:#c3cdd9;
+        --rule-strong:#9fabbb;
+    }
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    html{
+        scroll-behavior:smooth;
+    }
+
+    body{
+        background-color:var(--paper);
+        background-image:
+            linear-gradient(var(--grid-line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+        background-size:28px 28px;
+        color:var(--navy-ink);
+        font-family:'IBM Plex Serif', Georgia, serif;
+        line-height:1.7;
+    }
+
+    a{ color:inherit; }
+
+    /* ===== ENCABEZADO / BLOQUE DE TÍTULO ===== */
+    header{
+        background-color:var(--navy);
+        color:#fff;
+        border-bottom:5px solid var(--orange);
+    }
+
+    .bloque-titulo{
+        max-width:1080px;
+        margin:0 auto;
+        display:flex;
+        align-items:center;
+        gap:20px;
+        padding:22px 24px 18px;
+        font-family:'IBM Plex Sans', Arial, sans-serif;
+    }
+
+    .bloque-titulo img{
+        height:64px;
+        width:64px;
+        object-fit:contain;
+        background-color:#fff;
+        border-radius:50%;
+        flex-shrink:0;
+    }
+
+    .bloque-titulo .rotulo{
+        display:flex;
+        flex-direction:column;
+        gap:4px;
+    }
+
+    .bloque-titulo .escuela{
+        font-size:0.78rem;
+        letter-spacing:0.02em;
+        color:#c9d6e8;
+        font-weight:500;
+    }
+
+    .bloque-titulo h1{
+        font-size:1.55rem;
+        font-weight:600;
+        line-height:1.25;
+    }
+
+    /* Barra de navegación tipo índice de planos */
+    nav{
+        background-color:#0a2445;
+        border-top:1px solid #1c3d6b;
+    }
+
+    nav ul{
+        list-style:none;
+        max-width:1080px;
+        margin:0 auto;
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+    nav ul li{
+        border-right:1px solid #1c3d6b;
+    }
+
+    nav ul li a{
+        font-family:'IBM Plex Sans', Arial, sans-serif;
+        display:flex;
+        align-items:baseline;
+        gap:8px;
+        text-decoration:none;
+        color:#dbe6f4;
+        padding:12px 20px;
+        font-size:0.92rem;
+        font-weight:500;
+        transition:background-color 0.2s ease, color 0.2s ease;
+    }
+
+    nav ul li a .num{
+        font-family:'IBM Plex Mono', monospace;
+        font-size:0.78rem;
+        color:var(--orange);
+    }
+
+    nav ul li a:hover{
+        background-color:var(--orange);
+        color:#1a1200;
+    }
+
+    nav ul li a:hover .num{
+        color:#1a1200;
+    }
+
+    /* ===== CUERPO ===== */
+    main{
+        max-width:1080px;
+        margin:36px auto;
+        padding:0 24px;
+        display:flex;
+        flex-direction:column;
+        gap:30px;
+    }
+
+    section{
+        position:relative;
+        background-color:var(--sheet);
+        border:1px solid var(--rule);
+        padding:30px 34px 34px;
+        scroll-margin-top:12px;
+    }
+
+    /* Marcas de registro tipo plano técnico, en dos esquinas */
+    section::before,
+    section::after{
+        content:"";
+        position:absolute;
+        width:18px;
+        height:18px;
+        border-color:var(--navy);
+        border-style:solid;
+        border-width:0;
+    }
+
+    section::before{
+        top:-1px;
+        left:-1px;
+        border-top-width:3px;
+        border-left-width:3px;
+    }
+
+    section::after{
+        bottom:-1px;
+        right:-1px;
+        border-bottom-width:3px;
+        border-right-width:3px;
+    }
+
+    .encabezado-hoja{
+        display:flex;
+        align-items:baseline;
+        gap:16px;
+        margin-bottom:18px;
+        border-bottom:2px solid var(--navy);
+        padding-bottom:12px;
+    }
+
+    .encabezado-hoja .ficha{
+        font-family:'IBM Plex Mono', monospace;
+        font-size:0.85rem;
+        color:#fff;
+        background-color:var(--navy);
+        padding:4px 9px;
+        flex-shrink:0;
+    }
+
+    section h2{
+        font-family:'IBM Plex Sans', Arial, sans-serif;
+        color:var(--navy);
+        font-size:1.35rem;
+        font-weight:600;
+    }
+
+    .cuerpo-hoja{
+        display:grid;
+        grid-template-columns:1.15fr 1fr;
+        gap:26px;
+        align-items:start;
+    }
+
+    .figura{
+        border:1px solid var(--rule-strong);
+        padding:6px;
+    }
+
+    .figura img{
+        display:block;
+        width:100%;
+        height:auto;
+    }
+
+    .figura figcaption{
+        font-family:'IBM Plex Mono', monospace;
+        font-size:0.72rem;
+        color:var(--rule-strong);
+        text-align:right;
+        padding:5px 3px 0;
+    }
+
+    section p{
+        text-align:justify;
+        max-width:62ch;
+    }
+
+    /* La sección de video ocupa una sola columna */
+    #video .cuerpo-hoja{
+        grid-template-columns:1fr;
+    }
+
+    .video-wrapper{
+        position:relative;
+        width:100%;
+        max-width:760px;
+        padding-top:42.7%;
+        border:1px solid var(--rule-strong);
+    }
+
+    .video-wrapper iframe{
+        position:absolute;
+        inset:0;
+        width:100%;
+        height:100%;
+        border:0;
+    }
+
+    /* ===== PIE / BLOQUE DE PLANO ===== */
+    footer{
+        background-color:var(--navy);
+        color:#cfdaea;
+        border-top:5px solid var(--orange);
+        margin-top:10px;
+    }
+
+    .pie-contenido{
+        max-width:1080px;
+        margin:0 auto;
+        padding:22px 24px;
+        display:flex;
+        flex-wrap:wrap;
+        align-items:center;
+        justify-content:space-between;
+        gap:14px;
+        font-family:'IBM Plex Sans', Arial, sans-serif;
+        font-size:0.85rem;
+    }
+
+    .redes{
+        display:flex;
+        gap:10px;
+    }
+
+    .redes a{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width:32px;
+        height:32px;
+        border:1px solid #2c4a76;
+        color:#cfdaea;
+        transition:background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .redes a:hover{
+        background-color:var(--orange);
+        border-color:var(--orange);
+        color:#1a1200;
+    }
+
+    .redes svg{
+        width:16px;
+        height:16px;
+        fill:currentColor;
+    }
+
+    /* ===== RESPONSIVO (CELULAR) ===== */
+    @media (max-width:760px){
+        .cuerpo-hoja{
+            grid-template-columns:1fr;
+        }
+    }
+
+    @media (max-width:600px){
+        .bloque-titulo{
+            flex-direction:column;
+            text-align:center;
+            padding:20px 18px 16px;
+        }
+
+        .bloque-titulo img{
+            height:52px;
+            width:52px;
+        }
+
+        nav ul{
+            flex-direction:column;
+        }
+
+        nav ul li{
+            border-right:none;
+            border-bottom:1px solid #1c3d6b;
+        }
+
+        main{
+            margin:22px auto;
+            padding:0 14px;
+            gap:22px;
+        }
+
+        section{
+            padding:22px 18px 26px;
+        }
+
+        .encabezado-hoja{
+            flex-wrap:wrap;
+        }
+
+        .pie-contenido{
+            flex-direction:column;
+            text-align:center;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- ===== ENCABEZADO ===== -->
+    <header>
+        <div class="bloque-titulo">
+            <img src="img/logo-escuela.png" alt="Logo de la escuela">
+            <div class="rotulo">
+                <span class="escuela">Centro de Bachillerato Tecnológico Industrial y de Servicios No. 260</span>
+                <h1>Inteligencia Artificial</h1>
+            </div>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#que-es"><span class="num">01</span>Qué es</a></li>
+                <li><a href="#antecedentes"><span class="num">02</span>Antecedentes</a></li>
+                <li><a href="#tipos"><span class="num">03</span>Tipos</a></li>
+                <li><a href="#programacion"><span class="num">04</span>Programación</a></li>
+                <li><a href="#video"><span class="num">05</span>Video</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== CUERPO ===== -->
+    <main>
+
+        <section id="que-es">
+            <div class="encabezado-hoja">
+                <span class="ficha">01 / 05</span>
+                <h2>¿Qué es la Inteligencia Artificial?</h2>
+            </div>
+            <div class="cuerpo-hoja">
+                <p>
+                    Texto de ejemplo: aquí se explicaría la definición de la Inteligencia Artificial,
+                    sus características principales y su objetivo general dentro de la tecnología.
+                </p>
+                <figure class="figura">
+                    <img src="img/ia-general.jpg" alt="Representación de Inteligencia Artificial">
+                    <figcaption>fig. 01</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section id="antecedentes">
+            <div class="encabezado-hoja">
+                <span class="ficha">02 / 05</span>
+                <h2>Antecedentes</h2>
+            </div>
+            <div class="cuerpo-hoja">
+                <p>
+                    Texto de ejemplo: aquí se colocaría una breve línea del tiempo o historia sobre
+                    el origen y evolución de la Inteligencia Artificial a lo largo de los años.
+                </p>
+                <figure class="figura">
+                    <img src="img/antecedentes.jpg" alt="Antecedentes históricos de la IA">
+                    <figcaption>fig. 02</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section id="tipos">
+            <div class="encabezado-hoja">
+                <span class="ficha">03 / 05</span>
+                <h2>Tipos de Inteligencia Artificial</h2>
+            </div>
+            <div class="cuerpo-hoja">
+                <p>
+                    Texto de ejemplo: aquí se describirían los distintos tipos de IA, por ejemplo
+                    IA débil, IA fuerte, aprendizaje automático, aprendizaje profundo, etc.
+                </p>
+                <figure class="figura">
+                    <img src="img/tipos-ia.jpg" alt="Tipos de Inteligencia Artificial">
+                    <figcaption>fig. 03</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section id="programacion">
+            <div class="encabezado-hoja">
+                <span class="ficha">04 / 05</span>
+                <h2>Programación en la IA</h2>
+            </div>
+            <div class="cuerpo-hoja">
+                <p>
+                    Texto de ejemplo: aquí se hablaría sobre los lenguajes y herramientas usadas
+                    para programar sistemas de Inteligencia Artificial, como Python, librerías, etc.
+                </p>
+                <figure class="figura">
+                    <img src="img/programacion.jpg" alt="Programación aplicada a la IA">
+                    <figcaption>fig. 04</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section id="video">
+            <div class="encabezado-hoja">
+                <span class="ficha">05 / 05</span>
+                <h2>Video</h2>
+            </div>
+            <div class="cuerpo-hoja">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/PPMb_rrej5c"
+                        title="Video sobre Inteligencia Artificial"
+                        frameborder="0"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== PIE ===== -->
+    <footer>
+        <div class="pie-contenido">
+            <p>&copy; 2026 CBTIS No. 260 — Todos los derechos reservados</p>
+            <div class="redes">
+                <a href="#" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg>
+                </a>
+                <a href="#" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2.1.26 2.6.46.6.24 1.1.55 1.6 1.03.48.48.8.99 1.03 1.6.2.5.4 1.4.46 2.6.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.26 2.1-.46 2.6a4.4 4.4 0 0 1-1.03 1.6 4.4 4.4 0 0 1-1.6 1.03c-.5.2-1.4.4-2.6.46-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-2.1-.26-2.6-.46a4.4 4.4 0 0 1-1.6-1.03 4.4 4.4 0 0 1-1.03-1.6c-.2-.5-.4-1.4-.46-2.6C2.21 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.26-2.1.46-2.6.24-.6.55-1.1 1.03-1.6.48-.48.99-.8 1.6-1.03.5-.2 1.4-.4 2.6-.46C8.4 2.21 8.8 2.2 12 2.2m0 2.16c-3.13 0-3.5 0-4.75.07-1 .05-1.6.22-1.96.36-.5.19-.84.42-1.2.79-.37.36-.6.7-.8 1.2-.13.36-.3.96-.36 1.96C2.86 8.5 2.86 8.87 2.86 12s0 3.5.07 4.75c.05 1 .22 1.6.36 1.96.19.5.42.84.79 1.2.36.37.7.6 1.2.8.36.13.96.3 1.96.36 1.25.06 1.62.07 4.75.07s3.5 0 4.75-.07c1-.05 1.6-.22 1.96-.36.5-.2.84-.43 1.2-.8.37-.36.6-.7.8-1.2.13-.36.3-.96.36-1.96.06-1.25.07-1.62.07-4.75s0-3.5-.07-4.75c-.05-1-.22-1.6-.36-1.96a3.2 3.2 0 0 0-.8-1.2 3.2 3.2 0 0 0-1.2-.79c-.36-.14-.96-.3-1.96-.36C15.5 4.36 15.13 4.36 12 4.36m0 3.7a3.94 3.94 0 1 1 0 7.88 3.94 3.94 0 0 1 0-7.88m0 1.94a2 2 0 1 0 0 4 2 2 0 0 0 0-4m5-2.14a.92.92 0 1 1 0-1.84.92.92 0 0 1 0 1.84"/></svg>
+                </a>
+                <a href="#" aria-label="Twitter/X">
+                    <svg viewBox="0 0 24 24"><path d="M18.24 3H21l-6.4 7.3L22 21h-6.2l-4.9-6.4L5.3 21H2.5l6.8-7.8L2 3h6.4l4.4 5.9L18.24 3m-1.1 16h1.7L7.9 4.9H6.1L17.14 19z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
